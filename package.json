@@ -1,7 +1,9 @@
 {
   "name": "neslihanogretmenim",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.1.0",
+  "description": "Neslihan Öğretmen için etkinlik paylaşım platformu",
+  "author": "bugracdnc",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
