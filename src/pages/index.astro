@@ -51,7 +51,7 @@ const categories = [
       {
         categories.map((cat) => (
           <a
-            href={`/kategori/${cat.slug}`}
+            href={`${import.meta.env.BASE_URL}kategori/${cat.slug}`}
             class={`group relative flex flex-col items-center justify-center p-8 aspect-square rounded-[3rem] shadow-sm transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl ${cat.color}`}
           >
             <div class="w-24 h-24 mb-6 bg-white/60 rounded-full flex items-center justify-center text-4xl group-hover:scale-110 transition-transform duration-300">
