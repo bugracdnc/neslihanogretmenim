@@ -1,43 +1,27 @@
-# Astro Starter Kit: Minimal
+# 🌸 Neslihan Öğretmen | Etkinlik Havuzu
 
-```sh
-npm create astro@latest -- --template minimal
-```
+A modern, lightning-fast static website built to share primary school classroom activities, worksheets, and resources. Designed with a warm, "summer picnic" aesthetic to make finding educational materials joyful and effortless.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## ✨ Features
 
-## 🚀 Project Structure
+- **Lightning Fast:** Built with Astro for zero-JS frontend delivery where possible.
+- **Dynamic Search & Filter:** Buttery-smooth, client-side filtering powered by Vue.js transitions.
+- **Modern Styling:** Responsive, pastel-themed UI crafted with Tailwind CSS.
+- **Teacher-Friendly:** Organized by grade level and specific days/weeks.
 
-Inside of your Astro project, you'll see the following folders and files:
+## 🛠️ Tech Stack
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+- **Framework:** [Astro](https://astro.build/)
+- **Interactivity:** [Vue.js](https://vuejs.org/) (Composition API)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Language:** TypeScript
+- **Hosting:** GitHub Pages
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## 🚀 Local Development
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+To run this project on your local Pardus/Linux machine:
 
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+1. Clone the repository:
+   ```bash
+   git clone [https://github.com/bugracdnc/neslihanogretmenim.git](https://github.com/bugracdnc/neslihanogretmenim.git)
+   ```
