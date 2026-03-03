@@ -1,0 +1,87 @@
+---
+// src/pages/kategori/[slug].astro
+import Layout from "../../layouts/Layout.astro";
+import ActivityList from "../../components/ActivityList.vue";
+
+// getStaticPaths is required by Astro for dynamic routes.
+// It tells Astro exactly which pages to generate when we build the site.
+export function getStaticPaths() {
+  return [
+    { params: { slug: "1-sinif" }, props: { title: "1. Sınıf İçerikleri" } },
+    { params: { slug: "2-sinif" }, props: { title: "2. Sınıf İçerikleri" } },
+    { params: { slug: "3-sinif" }, props: { title: "3. Sınıf İçerikleri" } },
+    { params: { slug: "4-sinif" }, props: { title: "4. Sınıf İçerikleri" } },
+    {
+      params: { slug: "belirli-gunler" },
+      props: { title: "Belirli Gün ve Haftalar" },
+    },
+  ];
+}
+
+const { title } = Astro.props;
+
+// Placeholder data! Later, we will pull this from GitHub markdown files or your Go backend.
+const dummyActivities = [
+  {
+    id: 1,
+    title: "Okuma Yazma Çalışması",
+    description: "Renkli harf boyama ve çizgi etkinlikleri şablonu.",
+    tag: "Türkçe",
+  },
+  {
+    id: 2,
+    title: "Toplama İşlemi Treni",
+    description:
+      "Sınıf panosuna asmalık, eğlenceli vagonlarla toplama alıştırmaları.",
+    tag: "Matematik",
+  },
+  {
+    id: 3,
+    title: "Mevsimler Panosu",
+    description: "Görsel sanatlar dersi için kes-yapıştır mevsimler şablonu.",
+    tag: "Görsel Sanatlar",
+  },
+  {
+    id: 4,
+    title: "23 Nisan Şiirleri",
+    description: "Törende okunabilecek kısa, öz ve coşkulu şiirler derlemesi.",
+    tag: "Belirli Günler",
+  },
+  {
+    id: 5,
+    title: "Ritmik Sayma Tırtılı",
+    description:
+      "2, 3, 4 ve 5er ritmik sayma için panoya asılacak renkli tırtıl.",
+    tag: "Matematik",
+  },
+  {
+    id: 6,
+    title: "Eş Anlamlı Kelimeler Hafıza Oyunu",
+    description:
+      "Çocukların kesip oynayabileceği eş anlamlı kelimeler kartları.",
+    tag: "Oyun",
+  },
+];
+---
+
+<Layout title={`${title} | Neslihan Öğretmen`}>
+  <div class="mb-12 text-center mt-12">
+    <a
+      href="/"
+      class="inline-block mb-8 text-pink-500 hover:text-pink-600 font-bold tracking-wide transition-colors"
+    >
+      &larr; Ana Sayfaya Dön
+    </a>
+    <h1
+      class="text-5xl md:text-6xl font-extrabold text-slate-800 mb-6 tracking-tight"
+    >
+      {title}
+    </h1>
+    <p class="text-slate-500 text-xl max-w-2xl mx-auto">
+      Bu kategoriye ait tüm materyalleri aşağıdan inceleyebilir ve hızlıca
+      indirebilirsiniz.
+    </p>
+  </div>
+
+  <ActivityList client:load activities={dummyActivities} />
+</Layout>
