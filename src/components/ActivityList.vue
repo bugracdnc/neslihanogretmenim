@@ -122,7 +122,9 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
 
-const baseUrl = import.meta.env.BASE_URL === '/' ? '' : import.meta.env.BASE_URL;
+// src/components/ActivityList.vue içindeki script kısmında:
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 // id artık string oldu çünkü CMS, dosya adlarını (slug) id olarak kullanıyor
 interface Activity {
