@@ -1,67 +1,57 @@
 ---
 // src/pages/kategori/[slug].astro
+import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import ActivityList from "../../components/ActivityList.vue";
 
-// getStaticPaths is required by Astro for dynamic routes.
-// It tells Astro exactly which pages to generate when we build the site.
+// Sayfalarımızı ve bu sayfaların hangi "ana etiketi" arayacağını tanımlıyoruz
 export function getStaticPaths() {
   return [
-    { params: { slug: "1-sinif" }, props: { title: "1. Sınıf İçerikleri" } },
-    { params: { slug: "2-sinif" }, props: { title: "2. Sınıf İçerikleri" } },
-    { params: { slug: "3-sinif" }, props: { title: "3. Sınıf İçerikleri" } },
-    { params: { slug: "4-sinif" }, props: { title: "4. Sınıf İçerikleri" } },
+    {
+      params: { slug: "1-sinif" },
+      props: { title: "1. Sınıf İçerikleri", targetTag: "1. Sınıf" },
+    },
+    {
+      params: { slug: "2-sinif" },
+      props: { title: "2. Sınıf İçerikleri", targetTag: "2. Sınıf" },
+    },
+    {
+      params: { slug: "3-sinif" },
+      props: { title: "3. Sınıf İçerikleri", targetTag: "3. Sınıf" },
+    },
+    {
+      params: { slug: "4-sinif" },
+      props: { title: "4. Sınıf İçerikleri", targetTag: "4. Sınıf" },
+    },
     {
       params: { slug: "belirli-gunler" },
-      props: { title: "Belirli Gün ve Haftalar" },
+      props: { title: "Belirli Gün ve Haftalar", targetTag: "Belirli Günler" },
+    },
+    {
+      params: { slug: "gorsel-sanatlar" },
+      props: { title: "Görsel Sanatlar", targetTag: "Görsel Sanatlar" },
     },
   ];
 }
 
-const { title } = Astro.props;
+const { title, targetTag } = Astro.props;
 
-// Placeholder data! Later, we will pull this from GitHub markdown files or your Go backend.
-const dummyActivities = [
-  {
-    id: 1,
-    title: "Okuma Yazma Çalışması",
-    description: "Renkli harf boyama ve çizgi etkinlikleri şablonu.",
-    tag: "Türkçe",
-  },
-  {
-    id: 2,
-    title: "Toplama İşlemi Treni",
-    description:
-      "Sınıf panosuna asmalık, eğlenceli vagonlarla toplama alıştırmaları.",
-    tag: "Matematik",
-  },
-  {
-    id: 3,
-    title: "Mevsimler Panosu",
-    description: "Görsel sanatlar dersi için kes-yapıştır mevsimler şablonu.",
-    tag: "Görsel Sanatlar",
-  },
-  {
-    id: 4,
-    title: "23 Nisan Şiirleri",
-    description: "Törende okunabilecek kısa, öz ve coşkulu şiirler derlemesi.",
-    tag: "Belirli Günler",
-  },
-  {
-    id: 5,
-    title: "Ritmik Sayma Tırtılı",
-    description:
-      "2, 3, 4 ve 5er ritmik sayma için panoya asılacak renkli tırtıl.",
-    tag: "Matematik",
-  },
-  {
-    id: 6,
-    title: "Eş Anlamlı Kelimeler Hafıza Oyunu",
-    description:
-      "Çocukların kesip oynayabileceği eş anlamlı kelimeler kartları.",
-    tag: "Oyun",
-  },
-];
+// 1. Tüm etkinlikleri Markdown klasöründen çek
+const allActivities = await getCollection("etkinlikler");
+
+// 2. Sadece bu sayfanın ana etiketine (örn: "1. Sınıf") sahip olanları filtrele ve Vue'nun anlayacağı formata çevir
+const realActivities = allActivities
+  .filter(
+    (activity) => activity.data.tags && activity.data.tags.includes(targetTag),
+  )
+  .map((activity) => ({
+    id: activity.id, // Artık id olarak Astro'nun otomatik ürettiği dosya adını (slug) kullanıyoruz
+    title: activity.data.title,
+    description: activity.data.description,
+    tags: activity.data.tags,
+    thumbnail: activity.data.thumbnail,
+    file: activity.data.file,
+  }));
 ---
 
 <Layout title={`${title} | Neslihan Öğretmen`}>
@@ -83,5 +73,5 @@ const dummyActivities = [
     </p>
   </div>
 
-  <ActivityList client:load activities={dummyActivities} />
+  <ActivityList client:load activities={realActivities} />
 </Layout>

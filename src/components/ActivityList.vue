@@ -1,34 +1,62 @@
 <template>
     <div class="max-w-6xl mx-auto px-4">
 
-        <div class="mb-12 max-w-4xl mx-auto flex flex-col md:flex-row gap-4 items-center justify-between">
-            <div class="relative w-full">
-                <input v-model="searchQuery" type="text"
-                    placeholder="Etkinlik, konu veya kelime ara... (örn: Matematik, 23 Nisan)"
-                    class="w-full px-8 py-4 rounded-full border-2 border-pink-100 bg-white/80 backdrop-blur-sm focus:outline-none focus:border-pink-300 focus:ring-4 focus:ring-pink-50 transition-all text-lg shadow-sm placeholder-slate-400 text-slate-700" />
-                <span class="absolute right-6 top-4 text-2xl opacity-60">🌸</span>
+        <div class="mb-10 max-w-4xl mx-auto">
+
+            <div class="flex flex-col md:flex-row gap-4 items-center justify-between mb-6">
+                <div class="relative w-full">
+                    <input v-model="searchQuery" type="text"
+                        placeholder="Etkinlik, konu veya kelime ara... (örn: Toplama)"
+                        class="w-full pl-8 pr-24 py-4 rounded-full border-2 border-pink-100 bg-white/80 backdrop-blur-sm focus:outline-none focus:border-pink-300 focus:ring-4 focus:ring-pink-50 transition-all text-lg shadow-sm placeholder-slate-400 text-slate-700" />
+                    <button v-if="searchQuery" @click="searchQuery = ''"
+                        class="absolute right-14 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-pink-500 hover:bg-pink-50 rounded-full transition-all"
+                        title="Aramayı Temizle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <span
+                        class="absolute right-6 top-1/2 -translate-y-1/2 text-2xl opacity-60 pointer-events-none">🌸</span>
+                </div>
+
+                <div
+                    class="flex items-center bg-white/80 backdrop-blur-sm p-1.5 rounded-[1.25rem] border-2 border-pink-100 shadow-sm shrink-0">
+                    <button @click="viewMode = 'grid'"
+                        :class="viewMode === 'grid' ? 'bg-pink-100 text-pink-700 shadow-sm' : 'text-slate-400 hover:text-slate-600'"
+                        class="p-2.5 rounded-xl transition-all duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                        </svg>
+                    </button>
+                    <button @click="viewMode = 'list'"
+                        :class="viewMode === 'list' ? 'bg-pink-100 text-pink-700 shadow-sm' : 'text-slate-400 hover:text-slate-600'"
+                        class="p-2.5 rounded-xl transition-all duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
             </div>
 
-            <div
-                class="flex items-center bg-white/80 backdrop-blur-sm p-1.5 rounded-[1.25rem] border-2 border-pink-100 shadow-sm shrink-0">
-                <button @click="viewMode = 'grid'"
-                    :class="viewMode === 'grid' ? 'bg-pink-100 text-pink-700 shadow-sm' : 'text-slate-400 hover:text-slate-600'"
-                    class="p-2.5 rounded-xl transition-all duration-200" title="Grid Görünümü">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                    </svg>
+            <div v-if="uniqueTags.length > 0" class="flex flex-wrap gap-2 items-center px-2">
+                <span class="text-sm font-semibold text-slate-400 mr-2">Filtrele:</span>
+                <button @click="selectedTag = null"
+                    :class="!selectedTag ? 'bg-amber-400 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:border-amber-300 hover:bg-amber-50'"
+                    class="px-4 py-1.5 rounded-full text-sm font-bold transition-all duration-200">
+                    Tümü
                 </button>
-                <button @click="viewMode = 'list'"
-                    :class="viewMode === 'list' ? 'bg-pink-100 text-pink-700 shadow-sm' : 'text-slate-400 hover:text-slate-600'"
-                    class="p-2.5 rounded-xl transition-all duration-200" title="Liste Görünümü">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
+                <button v-for="tag in uniqueTags" :key="tag" @click="selectedTag = selectedTag === tag ? null : tag"
+                    :class="selectedTag === tag ? 'bg-amber-400 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:border-amber-300 hover:bg-amber-50'"
+                    class="px-4 py-1.5 rounded-full text-sm font-bold transition-all duration-200">
+                    {{ tag }}
                 </button>
             </div>
+
         </div>
 
         <TransitionGroup name="list" tag="div"
@@ -54,10 +82,10 @@
                 </div>
 
                 <div class="relative z-10 flex-grow" :class="viewMode === 'list' && 'flex-1 min-w-0'">
-                    <div class="flex items-center gap-2 mb-2" :class="viewMode === 'list' && 'mb-1'">
-                        <span
+                    <div class="flex flex-wrap items-center gap-2 mb-3" :class="viewMode === 'list' && 'mb-1'">
+                        <span v-for="tag in activity.tags" :key="tag"
                             class="inline-block px-3 py-1 bg-pink-100 text-pink-700 text-[10px] sm:text-xs font-extrabold tracking-wide uppercase rounded-full whitespace-nowrap">
-                            {{ activity.tag }}
+                            {{ tag }}
                         </span>
                     </div>
                     <h3 class="font-bold text-slate-800"
@@ -72,31 +100,38 @@
 
                 <div class="relative z-10"
                     :class="viewMode === 'grid' ? 'mt-auto pt-5 border-t border-pink-50/50 w-full' : 'w-full sm:w-auto shrink-0'">
-                    <button
-                        class="bg-gradient-to-r from-pink-200 to-amber-200 hover:from-pink-300 hover:to-amber-300 text-slate-800 font-bold transition-colors shadow-sm"
-                        :class="viewMode === 'grid' ? 'w-full py-4 rounded-2xl text-lg' : 'w-full sm:w-auto py-2.5 px-6 rounded-xl text-sm'">
-                        İndir 📥
-                    </button>
+                    <a :href="`${baseUrl}/etkinlik/${activity.id}`"
+                        class="block text-center bg-gradient-to-r from-pink-200 to-amber-200 hover:from-pink-300 hover:to-amber-300 text-slate-800 font-bold transition-colors shadow-sm"
+                        :class="[viewMode === 'grid' ? 'w-full py-4 rounded-2xl text-lg' : 'w-full sm:w-auto py-2.5 px-6 rounded-xl text-sm']">
+                        İncele 🔍
+                    </a>
                 </div>
             </div>
         </TransitionGroup>
 
         <div v-if="filteredActivities.length === 0" class="text-center py-20">
-            <p class="text-2xl text-slate-500 font-medium">Bu aramaya uygun etkinlik bulunamadı 🌼</p>
+            <p class="text-2xl text-slate-500 font-medium mb-4">Bu arama kriterlerine uygun etkinlik bulunamadı 🌼</p>
+            <button @click="searchQuery = ''; selectedTag = null"
+                class="px-6 py-2 bg-pink-100 text-pink-700 rounded-full font-bold hover:bg-pink-200 transition-colors">
+                Filtreleri Temizle
+            </button>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 
-// 1. We added 'thumbnail?' to make it optional
+const baseUrl = import.meta.env.BASE_URL;
+
+// id artık string oldu çünkü CMS, dosya adlarını (slug) id olarak kullanıyor
 interface Activity {
-    id: number;
+    id: string;
     title: string;
     description: string;
-    tag: string;
+    tags: string[];
     thumbnail?: string;
+    file?: string;
 }
 
 const props = defineProps<{
@@ -105,16 +140,56 @@ const props = defineProps<{
 
 const searchQuery = ref('');
 const viewMode = ref<'grid' | 'list'>('grid');
+const selectedTag = ref<string | null>(null);
+
+const uniqueTags = computed(() => {
+    const tagsSet = new Set<string>();
+    props.activities.forEach(a => {
+        if (a.tags) a.tags.forEach(t => tagsSet.add(t));
+    });
+    return Array.from(tagsSet).sort();
+});
+
+onMounted(() => {
+    const savedMode = localStorage.getItem('neslihan_view_mode');
+    if (savedMode === 'list' || savedMode === 'grid') viewMode.value = savedMode;
+
+    const params = new URLSearchParams(window.location.search);
+    const urlSearch = params.get('search');
+    const urlTag = params.get('tag');
+
+    if (urlSearch) searchQuery.value = urlSearch;
+    if (urlTag && uniqueTags.value.includes(urlTag)) selectedTag.value = urlTag;
+});
+
+watch(viewMode, (newMode) => {
+    localStorage.setItem('neslihan_view_mode', newMode);
+});
+
+watch([searchQuery, selectedTag], ([newSearch, newTag]) => {
+    const params = new URLSearchParams(window.location.search);
+
+    if (newSearch) params.set('search', newSearch);
+    else params.delete('search');
+
+    if (newTag) params.set('tag', newTag);
+    else params.delete('tag');
+
+    const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
+    window.history.replaceState({}, '', newUrl);
+});
 
 const filteredActivities = computed(() => {
-    if (!searchQuery.value) return props.activities;
+    return props.activities.filter(a => {
+        const searchMatch = !searchQuery.value ||
+            a.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+            a.description.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+            (a.tags && a.tags.some(t => t.toLowerCase().includes(searchQuery.value.toLowerCase())));
 
-    const lowerQuery = searchQuery.value.toLowerCase();
-    return props.activities.filter(a =>
-        a.title.toLowerCase().includes(lowerQuery) ||
-        a.description.toLowerCase().includes(lowerQuery) ||
-        a.tag.toLowerCase().includes(lowerQuery)
-    );
+        const tagMatch = !selectedTag.value || (a.tags && a.tags.includes(selectedTag.value));
+
+        return searchMatch && tagMatch;
+    });
 });
 </script>
 
