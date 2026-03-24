@@ -7,7 +7,7 @@ import vue from '@astrojs/vue';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://neslihanogretmenim.pages.dev',
+  site: 'https://neslihanogretmenim.com',
   base: '/',
   trailingSlash: 'never',
 
