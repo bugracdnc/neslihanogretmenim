@@ -1,32 +1,30 @@
 backend:
   name: github
   repo: bugracdnc/neslihanogretmenim
-  branch: feature/decap-cms # IMPORTANT: Point this to our current working branch!
+  branch: master # IMPORTANT: Point this to our current working branch!
 
 # THE MAGIC KEY: This lets us test the CMS locally on our Pardus machine without GitHub OAuth setup!
 local_backend: true
 
-# Where images and files will be saved in the repo
 media_folder: "public/uploads"
-# How the website will access those files (accounting for your GitHub Pages base path)
 public_folder: "/neslihanogretmenim/uploads"
 
 collections:
   - name: "etkinlikler"
-    label: "Etkinlikler (Tümü)"
+    label: "Etkinlikler"
     folder: "src/content/etkinlikler" # This is where the CMS will save the markdown files
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - { label: "Başlık", name: "title", widget: "string" }
       - {
-          label: "Açıklama (Kısa)",
+          label: "Açıklama",
           name: "description",
           widget: "text",
           hint: "Kartların üzerinde görünecek kısa açıklama.",
         }
       - {
-          label: "Kategoriler (Etiketler)",
+          label: "Kategoriler",
           name: "tags",
           widget: "select",
           multiple: true,
