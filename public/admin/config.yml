@@ -1,0 +1,66 @@
+backend:
+  name: github
+  repo: bugracdnc/neslihanogretmenim
+  branch: feature/decap-cms # IMPORTANT: Point this to our current working branch!
+
+# THE MAGIC KEY: This lets us test the CMS locally on our Pardus machine without GitHub OAuth setup!
+local_backend: true
+
+# Where images and files will be saved in the repo
+media_folder: "public/uploads"
+# How the website will access those files (accounting for your GitHub Pages base path)
+public_folder: "/neslihanogretmenim/uploads"
+
+collections:
+  - name: "etkinlikler"
+    label: "Etkinlikler (Tümü)"
+    folder: "src/content/etkinlikler" # This is where the CMS will save the markdown files
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Başlık", name: "title", widget: "string" }
+      - {
+          label: "Açıklama (Kısa)",
+          name: "description",
+          widget: "text",
+          hint: "Kartların üzerinde görünecek kısa açıklama.",
+        }
+      - {
+          label: "Kategoriler (Etiketler)",
+          name: "tags",
+          widget: "select",
+          multiple: true,
+          options:
+            [
+              "1. Sınıf",
+              "2. Sınıf",
+              "3. Sınıf",
+              "4. Sınıf",
+              "Belirli Günler",
+              "Matematik",
+              "Türkçe",
+              "Oyun",
+              "Görsel Sanatlar",
+            ],
+        }
+      - {
+          label: "Kapak Görseli",
+          name: "thumbnail",
+          widget: "image",
+          required: false,
+          hint: "Opsiyonel: Varsa etkinliğin resmi.",
+        }
+      - {
+          label: "İndirilecek Dosya",
+          name: "file",
+          widget: "file",
+          required: false,
+          hint: "PDF, ZIP, DOCX vb.",
+        }
+      - {
+          label: "Detaylı İçerik",
+          name: "body",
+          widget: "markdown",
+          required: false,
+          hint: "Eğer ileride kendi sayfasında uzun uzun yazmak istersen diye.",
+        }
