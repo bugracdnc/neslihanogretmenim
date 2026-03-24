@@ -1,7 +1,9 @@
 backend:
   name: github
   repo: bugracdnc/neslihanogretmenim
-  branch: master # IMPORTANT: Point this to our current working branch!
+  branch: master
+  base_url:
+  auth_endpoint: /auth
 
 # THE MAGIC KEY: This lets us test the CMS locally on our Pardus machine without GitHub OAuth setup!
 local_backend: true
