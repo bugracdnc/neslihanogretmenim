@@ -20,25 +20,24 @@ collections:
       - { label: "Başlık", name: "title", widget: "string" }
       - { label: "Kısa Açıklama", name: "description", widget: "text" }
       - { label: "Kategori/Etiket", name: "tags", widget: "list" }
-
       # Görsel (Thumbnail) için özel yapılandırma
-      - {
-          label: "Kapak Görseli",
-          name: "thumbnail",
-          widget: "image",
+      - { 
+          label: "Kapak Görseli", 
+          name: "thumbnail", 
+          widget: "image", 
           required: false,
-          media_folder: "public/images/publish/thumbnails",
-          public_folder: "/images/publish/thumbnails",
+          media_folder: "/public/publish/thumbnails", # Baştaki / işareti hayati önem taşır!
+          public_folder: "/publish/thumbnails"
         }
-
+        
       # İndirilebilir Dosya (File) için özel yapılandırma
-      - {
-          label: "İlişikli Dosya",
-          name: "file",
-          widget: "file",
+      - { 
+          label: "İlişikli Dosya", 
+          name: "file", 
+          widget: "file", 
           required: false,
-          media_folder: "public/files/publish",
-          public_folder: "/files/publish",
+          media_folder: "/public/publish/files", # Baştaki / işareti hayati önem taşır!
+          public_folder: "/publish/files"
         }
 
-      - { label: "İçerik", name: "body", widget: "markdown" }
+      - { label: "İçerik", name: "body", widget: "markdown", required:false }
