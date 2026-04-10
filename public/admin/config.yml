@@ -18,8 +18,27 @@ collections:
     slug: "{{slug}}"
     fields:
       - { label: "Başlık", name: "title", widget: "string" }
+      
       - { label: "Kısa Açıklama", name: "description", widget: "text" }
-      - { label: "Kategori/Etiket", name: "tags", widget: "list" }
+
+      - { 
+          label: "Kategori/Etiket", 
+          name: "tags", 
+          widget: "select", 
+          multiple: true, # Birden fazla kategori seçimine izin verir
+          options: [
+            "1. Sınıf", 
+            "2. Sınıf", 
+            "3. Sınıf", 
+            "4. Sınıf", 
+            "Belirli Günler ve Haftalar", 
+            "Görsel Sanatlar",
+            "Matematik",
+            "Türkçe",
+            "Okuma Yazma",
+            "Sınıf İçi Oyunlar"
+          ]
+        }
       # Görsel (Thumbnail) için özel yapılandırma
       - { 
           label: "Kapak Görseli", 
