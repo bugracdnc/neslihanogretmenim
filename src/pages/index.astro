@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { categories } from "../data/categories";
+import { categories, type Category } from "../data/categories";
 
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
@@ -21,20 +21,41 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
   <section class="max-w-5xl mx-auto mt-4 pb-20">
     <div class="grid grid-cols-2 md:grid-cols-3 gap-6 px-4 md:px-6">
       {
-        categories.map((cat) => (
+        categories.map((cat: Category) => (
           <a
             href={`${baseUrl}/kategori/${cat.slug}`}
-            class="group relative block aspect-square rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
+            class="group relative block aspect-square rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-white"
           >
-            <img
-              src={cat.image}
-              alt={cat.name}
-              class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
+            <div class="absolute inset-0 bg-gradient-to-br from-pink-50 to-amber-50 flex items-center justify-center text-pink-200 group-hover:scale-105 transition-transform duration-500 z-0">
+              <svg
+                class="w-24 h-24 opacity-60"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                />
+              </svg>
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent z-10" />
+            </div>
 
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/10 to-transparent" />
+            {cat.image && cat.image.trim() !== "" && (
+              <div class="absolute inset-0 z-20">
+                <img
+                  src={cat.image}
+                  alt={cat.name}
+                  class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 bg-white"
+                  onerror="this.parentElement.remove()"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/10 to-transparent" />
+              </div>
+            )}
 
-            <h2 class="absolute bottom-6 left-6 right-6 text-xl md:text-2xl font-bold text-white text-left leading-tight">
+            <h2 class="absolute bottom-6 left-6 right-6 text-xl md:text-2xl font-bold text-white text-left leading-tight z-30 drop-shadow-md pointer-events-none">
               {cat.name}
             </h2>
           </a>
