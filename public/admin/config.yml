@@ -13,53 +13,32 @@ public_folder: "/neslihanogretmenim/uploads"
 collections:
   - name: "etkinlikler"
     label: "Etkinlikler"
-    folder: "src/content/etkinlikler" # This is where the CMS will save the markdown files
+    folder: "src/content/etkinlikler"
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    slug: "{{slug}}"
     fields:
       - { label: "Başlık", name: "title", widget: "string" }
-      - {
-          label: "Açıklama",
-          name: "description",
-          widget: "text",
-          hint: "Kartların üzerinde görünecek kısa açıklama.",
-        }
-      - {
-          label: "Kategoriler",
-          name: "tags",
-          widget: "select",
-          multiple: true,
-          options:
-            [
-              "1. Sınıf",
-              "2. Sınıf",
-              "3. Sınıf",
-              "4. Sınıf",
-              "Belirli Günler",
-              "Matematik",
-              "Türkçe",
-              "Oyun",
-              "Görsel Sanatlar",
-            ],
-        }
+      - { label: "Kısa Açıklama", name: "description", widget: "text" }
+      - { label: "Kategori/Etiket", name: "tags", widget: "list" }
+
+      # Görsel (Thumbnail) için özel yapılandırma
       - {
           label: "Kapak Görseli",
           name: "thumbnail",
           widget: "image",
           required: false,
-          hint: "Opsiyonel: Varsa etkinliğin resmi.",
+          media_folder: "public/images/publish/thumbnails",
+          public_folder: "/images/publish/thumbnails",
         }
+
+      # İndirilebilir Dosya (File) için özel yapılandırma
       - {
-          label: "İndirilecek Dosya",
+          label: "İlişikli Dosya",
           name: "file",
           widget: "file",
           required: false,
-          hint: "PDF, ZIP, DOCX vb.",
+          media_folder: "public/files/publish",
+          public_folder: "/files/publish",
         }
-      - {
-          label: "Detaylı İçerik",
-          name: "body",
-          widget: "markdown",
-          required: false,
-          hint: "Eğer ileride kendi sayfasında uzun uzun yazmak istersen diye.",
-        }
+
+      - { label: "İçerik", name: "body", widget: "markdown" }

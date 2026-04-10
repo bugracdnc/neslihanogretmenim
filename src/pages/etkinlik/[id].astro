@@ -1,0 +1,118 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const etkinlikler = await getCollection("etkinlikler");
+  return etkinlikler.map((etkinlik) => ({
+    params: { id: etkinlik.id },
+    props: { etkinlik },
+  }));
+}
+
+const { etkinlik } = Astro.props;
+const { Content } = await render(etkinlik);
+
+const { title, description, tags, thumbnail, file } = etkinlik.data;
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<Layout title={`${title} | Neslihan Öğretmen`}>
+  <div class="py-6 md:py-12 max-w-4xl mx-auto px-4">
+    <a
+      href={`${baseUrl}/`}
+      class="inline-flex items-center gap-2 text-slate-500 hover:text-pink-500 transition-colors font-bold mb-6 group"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-5 h-5 group-hover:-translate-x-1 transition-transform"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+          clip-rule="evenodd"></path>
+      </svg>
+      Etkinliklere Dön
+    </a>
+
+    <article
+      class="bg-white rounded-[2.5rem] shadow-md border border-slate-100 overflow-hidden flex flex-col"
+    >
+      <div
+        class="relative pt-32 pb-12 px-8 md:px-16 md:pt-48 md:pb-16 flex flex-col justify-end min-h-[300px] md:min-h-[400px]"
+      >
+        {
+          thumbnail ? (
+            <>
+              <img
+                src={thumbnail}
+                alt={title}
+                class="absolute inset-0 w-full h-full object-cover z-0"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent z-0" />
+            </>
+          ) : (
+            <div class="absolute inset-0 bg-gradient-to-br from-pink-400 to-amber-500 z-0">
+              <div class="absolute inset-0 bg-black/20 z-0" />
+            </div>
+          )
+        }
+
+        <div class="relative z-10">
+          {
+            tags && tags.length > 0 && (
+              <div class="flex flex-wrap gap-2 mb-4">
+                {tags.map((tag: string) => (
+                  <span class="px-3 py-1 bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs md:text-sm font-extrabold uppercase tracking-wider rounded-full shadow-sm">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )
+          }
+
+          <h1
+            class="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight drop-shadow-md"
+          >
+            {title}
+          </h1>
+        </div>
+      </div>
+
+      <div class="p-8 md:p-12 lg:p-16 flex flex-col min-h-[300px]">
+        <div class="flex-grow max-w-3xl mx-auto w-full">
+          {
+            description && (
+              <p class="text-xl md:text-2xl text-slate-700 leading-relaxed font-medium">
+                {description}
+              </p>
+            )
+          }
+
+          <div
+            class="mt-8 prose prose-lg prose-slate prose-headings:text-slate-800 prose-a:text-pink-500 hover:prose-a:text-pink-600 prose-img:rounded-2xl prose-img:shadow-sm max-w-none"
+          >
+            <Content />
+          </div>
+        </div>
+
+        {
+          file && (
+            <div class="mt-12 pt-8 border-t border-slate-100 max-w-3xl mx-auto w-full">
+              <a
+                href={file}
+                download
+                target="_blank"
+                class="block w-full text-center bg-gradient-to-r from-pink-200 to-amber-200 hover:from-pink-300 hover:to-amber-300 text-slate-800 font-bold py-4 rounded-2xl text-lg transition-all shadow-sm hover:shadow-md hover:-translate-y-1"
+              >
+                Dosyayı İndir 📥
+              </a>
+            </div>
+          )
+        }
+      </div>
+    </article>
+  </div>
+</Layout>
