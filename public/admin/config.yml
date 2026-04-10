@@ -30,7 +30,12 @@ collections:
           public_folder: "/images/publish/thumbnails"
         }
         
+        
       # İndirilebilir Dosya (File) için özel yapılandırma
+      - { 
+          label: "İlişikli Dosya", 
+          name: "file", 
+          widget: "file", 
       - { 
           label: "İlişikli Dosya", 
           name: "file", 
@@ -40,4 +45,5 @@ collections:
           public_folder: "/images/publish/files"
         }
 
+      - { label: "İçerik", name: "body", widget: "markdown", required:false }
       - { label: "İçerik", name: "body", widget: "markdown", required:false }
