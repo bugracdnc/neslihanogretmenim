@@ -61,24 +61,34 @@
 
         <TransitionGroup name="list" tag="div"
             :class="viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8' : 'flex flex-col gap-3 max-w-4xl mx-auto'">
-            <div v-for="activity in filteredActivities" :key="activity.id"
-                class="bg-white shadow-sm border border-amber-50 hover:shadow-xl transition-all duration-300 relative overflow-hidden group flex"
+
+            <a v-for="activity in filteredActivities" :key="activity.id" :href="`${baseUrl}/etkinlik/${activity.id}`"
+                class="bg-white shadow-sm border border-amber-50 hover:shadow-xl transition-all duration-300 relative overflow-hidden group flex outline-none focus:ring-4 focus:ring-pink-200"
                 :class="viewMode === 'grid' ? 'rounded-[2.5rem] flex-col p-6 h-full hover:-translate-y-1' : 'rounded-2xl flex-col sm:flex-row items-start sm:items-center p-3 sm:pr-4 gap-4 hover:translate-x-1'">
+
                 <div class="absolute bg-gradient-to-br from-amber-50 to-pink-50 rounded-full z-0 group-hover:scale-150 transition-transform duration-700"
                     :class="viewMode === 'grid' ? '-right-8 -top-8 w-32 h-32' : '-right-4 -top-4 w-16 h-16'"></div>
 
                 <div v-if="viewMode === 'grid'"
-                    class="w-full h-48 mb-5 bg-pink-50/50 rounded-2xl flex items-center justify-center shrink-0 overflow-hidden relative border border-pink-100/50">
+                    class="w-full h-48 mb-5 rounded-2xl flex items-center justify-center shrink-0 overflow-hidden relative border border-pink-100/50"
+                    :class="activity.thumbnail ? 'bg-pink-50/50' : 'bg-gradient-to-br from-pink-50 to-amber-50'">
+
                     <img v-if="activity.thumbnail" :src="activity.thumbnail" alt=""
-                        class="w-full h-full object-cover" />
-                    <span v-else class="text-5xl opacity-50">🖼️</span>
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+
+                    <div v-else
+                        class="flex flex-col items-center justify-center text-pink-200 group-hover:scale-110 transition-transform duration-500">
+                        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                            </path>
+                        </svg>
+                    </div>
                 </div>
 
-                <div v-else
+                <div v-else-if="activity.thumbnail"
                     class="hidden sm:flex w-16 h-16 bg-pink-50/50 rounded-xl items-center justify-center shrink-0 overflow-hidden relative border border-pink-100/50">
-                    <img v-if="activity.thumbnail" :src="activity.thumbnail" alt=""
-                        class="w-full h-full object-cover" />
-                    <span v-else class="text-2xl opacity-50">🖼️</span>
+                    <img :src="activity.thumbnail" alt="" class="w-full h-full object-cover" />
                 </div>
 
                 <div class="relative z-10 flex-grow" :class="viewMode === 'list' && 'flex-1 min-w-0'">
@@ -100,13 +110,13 @@
 
                 <div class="relative z-10"
                     :class="viewMode === 'grid' ? 'mt-auto pt-5 border-t border-pink-50/50 w-full' : 'w-full sm:w-auto shrink-0'">
-                    <a :href="`${baseUrl}/etkinlik/${activity.id}`"
+                    <span
                         class="block text-center bg-gradient-to-r from-pink-200 to-amber-200 hover:from-pink-300 hover:to-amber-300 text-slate-800 font-bold transition-colors shadow-sm"
                         :class="[viewMode === 'grid' ? 'w-full py-4 rounded-2xl text-lg' : 'w-full sm:w-auto py-2.5 px-6 rounded-xl text-sm']">
                         İncele 🔍
-                    </a>
+                    </span>
                 </div>
-            </div>
+            </a>
         </TransitionGroup>
 
         <div v-if="filteredActivities.length === 0" class="text-center py-20">
@@ -122,11 +132,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
 
-// src/components/ActivityList.vue içindeki script kısmında:
-
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-// id artık string oldu çünkü CMS, dosya adlarını (slug) id olarak kullanıyor
 interface Activity {
     id: string;
     title: string;
