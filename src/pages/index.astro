@@ -40,7 +40,7 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
                   d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
                 />
               </svg>
-              <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent z-10" />
+            
             </div>
 
             {cat.image && cat.image.trim() !== "" && (
@@ -51,13 +51,8 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
                   class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 bg-white"
                   onerror="this.parentElement.remove()"
                 />
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/10 to-transparent" />
               </div>
             )}
-
-            <h2 class="absolute bottom-6 left-6 right-6 text-xl md:text-2xl font-bold text-white text-left leading-tight z-30 drop-shadow-md pointer-events-none">
-              {cat.name}
-            </h2>
           </a>
         ))
       }
