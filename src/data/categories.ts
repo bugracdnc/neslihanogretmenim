@@ -26,7 +26,7 @@ export const categories: Category[] = [
         image: "/images/categories/sinif-4.jpg",
     },
     {
-        name: "Belirli Günler ve Haftalar",
+        name: "Belirli Gün ve Haftalar",
         slug: "belirli-gunler",
         image: "/images/categories/belirli.jpg",
     },
